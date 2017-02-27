@@ -1,0 +1,120 @@
+
+
+
+••••••••••
+••• i = 1
+·········
+
+
+ Model Chisquare =  7.853887   Df =  4 Pr(>Chisq) = 0.09707955
+ RMSEA index =  0.05676542   90% CI: (NA, 0.1154826)
+ Tucker-Lewis NNFI =  0.9840798
+ Bentler CFI =  0.9936319
+ SRMR =  0.01872822
+
+ Normalized Residuals
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-0.6597000 -0.0641100 -0.0000006  0.0153600  0.2271000  0.5051000 
+
+ R-square for Endogenous Variables
+   Q01    Q02    Q03    Q04    Q05 
+0.5395 0.4614 0.6395 0.4032 0.3593 
+
+ Parameter Estimates
+         Estimate  Std Error  z value   Pr(>|z|)                     
+lambda11 0.8785842 0.06597468 13.316989 1.843943e-40 Q01 <--- PIPS_F1
+lambda21 0.6108338 0.05065843 12.057890 1.762400e-33 Q02 <--- PIPS_F1
+lambda31 0.9212013 0.06228581 14.789908 1.701865e-49 Q03 <--- PIPS_F1
+lambda41 0.7324119 0.06584411 11.123424 9.649635e-29 Q04 <--- PIPS_F1
+lambda51 0.6386001 0.06226670 10.255884 1.113522e-24 Q05 <--- PIPS_F1
+V[Q01]   0.6588479 0.07452367  8.840786 9.504741e-19 Q01 <--> Q01    
+V[Q02]   0.4355665 0.04465139  9.754824 1.759052e-22 Q02 <--> Q02    
+V[Q03]   0.4783002 0.06672396  7.168342 7.591141e-13 Q03 <--> Q03    
+V[Q04]   0.7939965 0.07679070 10.339748 4.657604e-25 Q04 <--> Q04    
+V[Q05]   0.7272960 0.06915512 10.516879 7.222684e-26 Q05 <--> Q05    
+err0205  0.3131435 0.04651509  6.732084 1.672505e-11 Q05 <--> Q02    
+
+ Iterations =  29 
+                  Std. Estimate                     
+                      1.0000000 PIPS_F1 <--> PIPS_F1
+lambda11 lambda11     0.7345143     Q01 <--- PIPS_F1
+lambda21 lambda21     0.6792561     Q02 <--- PIPS_F1
+lambda31 lambda31     0.7997118     Q03 <--- PIPS_F1
+lambda41 lambda41     0.6349806     Q04 <--- PIPS_F1
+lambda51 lambda51     0.5993917     Q05 <--- PIPS_F1
+V[Q01]     V[Q01]     0.4604887         Q01 <--> Q01
+V[Q02]     V[Q02]     0.5386112         Q02 <--> Q02
+V[Q03]     V[Q03]     0.3604611         Q03 <--> Q03
+V[Q04]     V[Q04]     0.5967997         Q04 <--> Q04
+V[Q05]     V[Q05]     0.6407296         Q05 <--> Q05
+err0205   err0205     0.3268403         Q05 <--> Q02
+
+ 0 largest modification indices, A matrix (regression coefficients):
+Q03<-Q02 
+5.921085 
+
+  0 largest modification indices, P matrix (variances/covariances):
+Q02<->Q01 
+ 4.894114 
+
+
+
+••••••••••
+••• i = 2
+·········
+
+
+ Model Chisquare =  11.07947   Df =  8 Pr(>Chisq) = 0.1972371
+ RMSEA index =  0.03588039   90% CI: (NA, 0.08188344)
+ Tucker-Lewis NNFI =  0.9908562
+ Bentler CFI =  0.9951233
+ SRMR =  0.02188031
+
+ Normalized Residuals
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-0.7198000 -0.2224000  0.0000015  0.0425800  0.2493000  0.9726000 
+
+ R-square for Endogenous Variables
+   Q01    Q02    Q03    Q04    Q05    Q06 
+0.5358 0.4645 0.6307 0.4128 0.3648 0.1097 
+
+ Parameter Estimates
+         Estimate  Std Error  z value   Pr(>|z|)                     
+lambda11 0.8755500 0.06572864 13.320678 1.755064e-40 Q01 <--- PIPS_F1
+lambda21 0.6128785 0.05045275 12.147573 5.909397e-34 Q02 <--- PIPS_F1
+lambda31 0.9148281 0.06197223 14.761905 2.578902e-49 Q03 <--- PIPS_F1
+lambda41 0.7411022 0.06548599 11.316957 1.081616e-29 Q04 <--- PIPS_F1
+lambda51 0.6434784 0.06198253 10.381610 3.006613e-25 Q05 <--- PIPS_F1
+lambda61 0.2655674 0.04964526  5.349300 8.829500e-08 Q06 <--- PIPS_F1
+V[Q01]   0.6641703 0.07386440  8.991752 2.433209e-19 Q01 <--> Q01    
+V[Q02]   0.4330646 0.04426183  9.784155 1.316902e-22 Q02 <--> Q02    
+V[Q03]   0.4900015 0.06551062  7.479727 7.447743e-14 Q03 <--> Q03    
+V[Q04]   0.7811905 0.07580045 10.305881 6.628122e-25 Q04 <--> Q04    
+V[Q05]   0.7210417 0.06855483 10.517738 7.157123e-26 Q05 <--> Q05    
+V[Q06]   0.5724503 0.04810286 11.900547 1.175733e-32 Q06 <--> Q06    
+err0205  0.3088479 0.04603031  6.709664 1.950733e-11 Q05 <--> Q02    
+
+ Iterations =  25 
+                  Std. Estimate                     
+                      1.0000000 PIPS_F1 <--> PIPS_F1
+lambda11 lambda11     0.7319777     Q01 <--- PIPS_F1
+lambda21 lambda21     0.6815297     Q02 <--- PIPS_F1
+lambda31 lambda31     0.7941791     Q03 <--- PIPS_F1
+lambda41 lambda41     0.6425149     Q04 <--- PIPS_F1
+lambda51 lambda51     0.6039705     Q05 <--- PIPS_F1
+lambda61 lambda61     0.3311900     Q06 <--- PIPS_F1
+V[Q01]     V[Q01]     0.4642086         Q01 <--> Q01
+V[Q02]     V[Q02]     0.5355173         Q02 <--> Q02
+V[Q03]     V[Q03]     0.3692796         Q03 <--> Q03
+V[Q04]     V[Q04]     0.5871746         Q04 <--> Q04
+V[Q05]     V[Q05]     0.6352196         Q05 <--> Q05
+V[Q06]     V[Q06]     0.8903132         Q06 <--> Q06
+err0205   err0205     0.3223568         Q05 <--> Q02
+
+ 0 largest modification indices, A matrix (regression coefficients):
+Q01<-Q04 
+4.953245 
+
+  0 largest modification indices, P matrix (variances/covariances):
+Q04<->Q01 
+ 4.953244 
