@@ -10,7 +10,7 @@ library(psych)                          ## loads package for cronbach alpha
 ### read in the data...the master data frame (MDF)
 ### no need for cleaning or reformatting
 ###
-MDF <- read.csv("sem_congeneric_demo_data.csv",stringsAsFactors=FALSE)
+MDF <- read.csv("demo/sem_congeneric_demo_data.csv",stringsAsFactors=FALSE)
 
 
 ### ################################################################################################

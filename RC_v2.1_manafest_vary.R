@@ -1,38 +1,15 @@
 library(sem)            # needed for latent variable analysis
 
-### ################################################################################################
-### change local directory
-# setwd("RS_sims")
+
 
 ### ################################################################################################
 # set a random seed so the data generated produces consistent results
-#   if you want to run different versions of this simulation, comment
-#   out the following line by placing a "#" at the start of the line
-
-# my.new.seed <- .Random.seed[271]   ## 271 = median of odd primes in length(.Random.seed) 
-# sink(file="time_stamps.txt",append=TRUE)
-# cat("Random Seed:\n")
-# cat("············\n")
-# print(my.new.seed)
-# cat("\n")
-# sink()
-# print(my.new.seed)
-# set.seed(my.new.seed)
-
+set.seed(123456)
 
 
 ### ################################################################################################
 ### focal variables to be adjusted for the different runs
-# FIXED  number of manifest variables
-#        number of reverse coded items (1-4)
-#        top or bottom if odd
-#         ·· 1 rev coded:  1-top, 1-bottom
-#         ·· 2 rev coded:  top, both, bottom
-#         ·· 3 rev coded:  2-top, 2-bottom
-#         ·· 4 rev coded:  3-top, 2-2, 3-bottom
-#            COUNT MULTIPIER = 10x
-# FIXED  granularity
-#        percent contamination
+
 # FIXED  sample size
 #        range for lambdas (∆=0.15 to set bottom-value of 0.40)
 #        maximum lambda    (0.85,0.75,0.65)
@@ -40,38 +17,86 @@ library(sem)            # needed for latent variable analysis
 #         ·· {0.4,0.75}, {0.5,0.75}, {0.6,0.75}
 #         ·· {0.4,0.65}, {0.5,0.65}
 #            COUNT MULTIPIER = 9x
-n.man <- 8
-n.samp <- 400
-gran <- 7
 
-rev.item.list <- list(c(2),c(6),c(2,3),c(2,6),c(6,7),c(2,3,6),c(2,6,7),
-                      c(2,3,4,6),c(2,3,6,7),c(2,6,7,8))
+# FIXED number of sample
+n.samp <- 400
+
+# Vary  number of manifest variables
+n.man <- 10
+
+# Vary  granularity
+gran <- 4
+
+# Vary  number of manifest variables
+#        number of reverse coded items (1-5)
+#        top or bottom if odd
+#         ·· 1 rev coded:  1-0, 0-1
+#         ·· 2 rev coded:  2-0, 1-1, 0-2
+#         ·· 3 rev coded:  3-0, 2-1, 1-2, 0-3 ##########question
+#         ·· 4 rev coded:  4-0, 3-1, 2-2, 1-3, 0-4
+#         ·· 5 rev coded:  4-1, 3-2, 2-3, 1-4
+#            COUNT MULTIPIER = 18x
+
+
+reverselist <- function(variable_number){
+  toplist = list()
+  bottomlist = list()
+  #runif(1)#0.7979891
+  set.seed(0.79)
+  for(i in 1:((variable_number)/2-1)){
+    toplist[[i+1]] = sample(variable_number/2,i)
+    bottomlist[[i+1]] = sample((variable_number/2+1):variable_number,i)
+  }
+  id = 0
+  rev.item.list = list()
+  for(i in 1:((variable_number)/2)){
+    print(i)
+    for(j in 0:i){
+      if(j+1 > variable_number/2 || i-j+1 >variable_number/2 ){}
+      else{
+        id = id + 1
+        rev.item.list[[id]] <- (sort(c(toplist[[i-j+1]],bottomlist[[j+1]])))
+      }
+    }
+  }
+  return(rev.item.list)
+}
+
+rev.item.list = reverselist(n.man)
+
+#rev.item.list <- list(c(2),c(6),c(2,3),c(2,6),c(6,7),c(2,3,6),c(2,6,7),c(2,3,4,6),c(2,3,6,7),c(2,6,7,8))
 
 
 ### ################################################################################################
 ### set the model
-tmp.text <- paste("V",1:n.man,sep="")
-tmp.text <- paste("   FAC1 --> ",tmp.text,sep="")
-tmp.text <- paste(tmp.text,",   lambda",sep="")
-tmp.text <- paste(tmp.text,1:n.man,sep="")
-tmp.text <- paste(tmp.text,",  NA\n",sep="")
-tmp.text <- paste(tmp.text,collapse="")
-tmp.text <- paste("   FAC1 <-> FAC1, NA,         1\n",tmp.text,sep="",collapse="")
-cat(tmp.text)
-model.sem <- specifyModel(text=tmp.text,quiet=TRUE)
-
-### ################################################################################################
 ### create the alternative models (different anchors vs. standardized latent variable)
-tmp.text <- sub("NA,         1","xi,       NA",tmp.text)
-cat(tmp.text)
-for(i in 1:8) {
-   tmp.text.alt <- sub(paste(c("lambda",i),collapse=""),"xyz",tmp.text)   
-   tmp.text.alt <- sub("xyz,  NA","NA,  1",tmp.text.alt)   
-   tmp.text.eval <- "model.sem.xyz <- specifyModel(text=tmp.text.alt,quiet=TRUE)"
-   tmp.text.eval <- sub("xyz",i,tmp.text.eval)
+
+originmodel <- function(variable_number){
+  tmp.text <- paste("V",1:variable_number,sep="")
+  tmp.text <- paste("   FAC1 --> ",tmp.text,sep="")
+  tmp.text <- paste(tmp.text,",   lambda",sep="")
+  tmp.text <- paste(tmp.text,1:variable_number,sep="")
+  tmp.text <- paste(tmp.text,",  NA\n",sep="")
+  tmp.text <- paste(tmp.text,collapse="")
+  tmp.text <- paste("   FAC1 <-> FAC1, NA,         1\n",tmp.text,sep="",collapse="")
+  return(tmp.text)
+}
+altermodel <- function(origin_structure,whichvariable){
+  tmp.text <- sub("NA,         1","xi,       NA",origin_structure)
+  tmp.text.alt <- sub(paste(c("lambda",whichvariable),collapse=""),"xyz",tmp.text) 
+  tmp.text.alt <- sub("xyz,  NA","NA,  1",tmp.text.alt)
+  return(specifyModel(text=tmp.text.alt,quiet=TRUE))
+}
+
+
+tmp.text = originmodel(n.man)
+model.sem <- specifyModel(text = tmp.text,quiet=TRUE)
+for(i in 1:n.man) {
+   tmp.text.eval <- "model.sem.xyz <- altermodel(tmp.text,xyz)"
+   tmp.text.eval <- gsub("xyz",i,tmp.text.eval)
    eval(parse(text=tmp.text.eval))
-   }
-rm(tmp.text,tmp.text.alt,tmp.text.eval,i)
+}
+rm(tmp.text,tmp.text.eval,i)
 
 
 ### ################################################################################################
@@ -84,7 +109,10 @@ var.names <- c("row.ct","sim.ct","n.man","gran","n.samp",
                "converge.type","F.min","chisq","df","chisq.H0","df.H0",
                "CFI","NNFI","RMSEA","SRMR",
                paste("st.lam.",1:n.man,sep=""))
-n.rows <- 51*10*9*15
+
+#to be decided
+purerepeat = 2
+n.rows <- 51*length(rev.item.list)*9*purerepeat
 
 MDF <- data.frame(array(NA,dim=c(n.rows,length(var.names))))
 names(MDF) <- var.names
@@ -101,7 +129,10 @@ bad.list <- list(1)
 bad.ctr <- 1
 
 ctr <- 0
-taus <- c(-1.5,-0.9,-0.3,0.3,0.9,1.5)
+
+#taus <- c(-1.5,-0.9,-0.3,0.3,0.9,1.5)
+taus = seq(-1.5,1.5,length.out = gran-1)####question
+
 
 ########################################################################################
 ### NOTE:  for the tryCatch() functions, the following models are tested:
@@ -118,12 +149,12 @@ for(jj in 0:50) {
     lam.mins <- seq(0.4,lam.max-0.15,0.10)
     for(kk.b in 1:length(lam.mins)) {
       lam.min <- lam.mins[kk.b]
-      lambda <- c(rep.int(lam.max,4),rep.int(lam.min,4))
+      lambda <- c(rep.int(lam.max,n.man/2),rep.int(lam.min,n.man/2))
       for(ll in 1:length(rev.item.list)) {
         rev.items <- rev.item.list[[ll]]
         n.rev <- length(rev.items)
-        rev.type <- length(which(rev.items < 5)) - length(which(rev.items > 4))
-        for(ii in 1:15) {
+        rev.type <- sum(rev.items<(n.man/2+1))-sum(rev.items>n.man/2)
+        for(ii in 1:purerepeat) {
           ### set the principle counter ··············································
           ctr <- ctr + 1
           ### generate the randomly generated data set ·······························
@@ -141,7 +172,7 @@ for(jj in 0:50) {
           tmp.val <- round(RS.per*n.samp)+1
           if(tmp.val < n.samp) {
             t.i <- tmp.val:n.samp   ## t.i = tmp.inds
-            for(i in 1:n.rev) XX.mat.r[t.i,rev.items[i]] <- 6 - XX.mat.r[t.i,rev.items[i]]
+            for(i in 1:n.rev) XX.mat.r[t.i,rev.items[i]] <- gran-1 - XX.mat.r[t.i,rev.items[i]]
             }
           ## set the convergence FLAG
           converge.val <- -1

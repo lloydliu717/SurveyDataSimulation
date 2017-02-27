@@ -34,7 +34,7 @@ set.seed(123456789)
 ### focal variables to be adjusted for the different runs
 # FIXED  number of manifest variables
 #        number of reverse coded items (1-4)
-#        top or bottom if odd
+#        top or bottom if odd???
 #         ·· 1 rev coded:  1-top, 1-bottom
 #         ·· 2 rev coded:  top, both, bottom
 #         ·· 3 rev coded:  2-top, 2-bottom
